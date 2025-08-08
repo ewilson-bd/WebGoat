@@ -1,11 +1,11 @@
 trigger:
 - none
 
-#pool:
-#  default
+pool:
+  default
 
-#variables:
-#  - group: Polaris
+variables:
+  - group: Polaris
 
 steps:
 - script: |
