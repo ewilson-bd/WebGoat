@@ -17,7 +17,7 @@ steps:
   inputs:
     versionSpec: '23'
     jdkArchitectureOption: 'x64'
-    jdkSourceOption: 'PreInstalled'
+    jdkSourceOption: 'AzureStorage'
   displayName: 'Install Java'
 
 - task: BlackDuckSecurityScan@2
