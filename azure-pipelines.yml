@@ -15,7 +15,22 @@ steps:
     java --version
   displayName: 'Version check'
 
-- script: |
-    echo Add other tasks to build, test, and deploy your project.
-    echo See https://aka.ms/yaml
-  displayName: 'Run a multi-line script'
+- task: BlackDuckSecurityScan@2
+  inputs:
+    scanType: 'polaris'
+    polarisServerUrl: 'https://poc.polaris.blackduck.com'
+    polarisAccessToken: '$(POLARIS_ACCESSTOKEN)'
+    polarisAssessmentTypes: 'SAST,SCA'
+    polarisTestScaType: 'SCA-Package'
+    polarisWaitForScan: false
+    polarisApplicationName: 'Evan Onboarding'
+
+- task: BlackDuckSecurityScan@2
+  inputs:
+    scanType: 'polaris'
+    polarisServerUrl: 'https://poc.polaris.blackduck.com'
+    polarisAccessToken: '$(POLARIS_ACCESSTOKEN)'
+    polarisAssessmentTypes: 'SCA'
+    polarisTestScaType: 'SCA-Signature'
+    polarisWaitForScan: false
+    polarisApplicationName: 'Evan Onboarding'
