@@ -2,7 +2,7 @@ trigger:
 - none
 
 pool:
-  vmImage: ubuntu-latest
+  default
 
 variables:
   - group: Polaris
@@ -13,22 +13,18 @@ steps:
     java --version
   displayName: 'Version check'
 
-- task: BlackDuckSecurityScan@2
+- task: JavaToolInstaller@0
   inputs:
-    scanType: 'polaris'
-    polarisServerUrl: 'https://poc.polaris.blackduck.com'
-    polarisAccessToken: '$(POLARIS_ACCESSTOKEN)'
-    polarisAssessmentTypes: 'SAST,SCA'
-    polarisTestScaType: 'SCA-Package'
-    polarisWaitForScan: false
-    polarisApplicationName: 'Evan Onboarding'
+    versionSpec: '23'
+    jdkArchitectureOption: 'x64'
+    jdkSourceOption: 'PreInstalled'
+  displayName: 'Install Java'
 
 - task: BlackDuckSecurityScan@2
   inputs:
     scanType: 'polaris'
     polarisServerUrl: 'https://poc.polaris.blackduck.com'
     polarisAccessToken: '$(POLARIS_ACCESSTOKEN)'
-    polarisAssessmentTypes: 'SCA'
-    polarisTestScaType: 'SCA-Signature'
-    polarisWaitForScan: false
+    polarisAssessmentTypes: 'SAST,SCA'
+    polarisTestScaType: 'SCA-Package,SCA-Signature'
     polarisApplicationName: 'Evan Onboarding'
