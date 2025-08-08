@@ -1,8 +1,8 @@
 trigger:
 - none
 
-pool:
-  default
+#pool:
+#  default
 
 #variables:
 #  - group: Polaris
