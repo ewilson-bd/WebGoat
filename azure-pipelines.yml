@@ -2,7 +2,7 @@ trigger:
 - none
 
 pool:
-  default
+  vmImage: ubuntu-latest
 
 variables:
   - group: Polaris
