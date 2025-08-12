@@ -1,51 +1,62 @@
-name: "Main / Pull requests build"
+name: CI-BlackDuck-SCA-Basic
 on:
-    pull_request:
-        paths-ignore:
-            - '.txt'
-            - 'LICENSE'
-            - 'docs/**'
-        branches: [ main ]
-    push:
-        branches:
-            - main
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
 
 jobs:
-    pre-commit:
-        name: Pre-commit check
-        runs-on: ubuntu-latest
-        steps:
-            -   name: Checkout git repository
-                uses: actions/checkout@v4.1.6
-            -   name: Setup python
-                uses: actions/setup-python@v5
-                with:
-                    python-version: "3.9"
-            -   uses: actions/setup-java@v4
-                with:
-                    distribution: 'temurin'
-                    java-version: '23'
-            -   name: Pre-commit checks
-                uses: pre-commit/action@v3.0.1
-            -   name: pre-commit-c-lite
-                uses: pre-commit-ci/lite-action@v1.1.0
-                if: always()
-    build:
-        runs-on: ${{ matrix.os }}
-        needs: [ pre-commit ]
-        strategy:
-            fail-fast: true
-            matrix:
-                os: [ windows-latest, ubuntu-latest, macos-13 ]
-            max-parallel: 1
-        steps:
-            -   uses: actions/checkout@v4.1.6
-            -   name: Set up JDK 23
-                uses: actions/setup-java@v4.2.1
-                with:
-                    distribution: 'temurin'
-                    java-version: 23
-                    architecture: x64
-                    cache: 'maven'
-            -   name: Build with Maven
-                run: mvn --no-transfer-progress verify
+  build:
+    runs-on: [ubuntu-latest]
+    steps:
+    - name: Checkout Source
+      uses: actions/checkout@v4
+    - name: Black Duck SCA Scan
+      id: black-duck-sca-scan
+      uses: blackduck-inc/black-duck-security-scan@v2
+      
+      ## DETECT Environment Variables
+      env:
+        DETECT_PROJECT_NAME: ${{ github.event.repository.name }}
+        DETECT_PROJECT_VERSION_NAME: ${{ github.event_name != 'pull_request' && github.ref_name || github.event.pull_request.base.ref }}
+
+      with:
+        ### SCANNING: Required fields
+        blackducksca_url: ${{ vars.BLACKDUCK_URL }}
+        blackducksca_token: ${{ secrets.BLACKDUCK_TOKEN }}
+        
+        ### SCANNING: Optional fields
+        # blackducksca_scan_failure_severities: 'BLOCKER,CRITICAL'
+
+        ### DETECT: Optional fields
+        # detect_search_depth: 20  # increase search depth if source is nested within sub-folder(s) in repository root
+
+        ### !!!!! PULL REQUEST COMMENTS - TO BE IMPLEMENTED LATER !!!!!
+        #blackducksca_prcomment_enabled: true
+        #github_token: ${{ secrets.GITHUB_TOKEN }} # Required when PR comments is enabled
+        
+        ### FIX PULL REQUEST CREATION: Uncomment below to enable, requires github_token
+        # blackducksca_fixpr_enabled: true
+
+        ### SARIF report generation
+        blackducksca_reports_sarif_create: true
+        # blackducksca_upload_sarif_report: true # Uncomment to upload to GitHub Advanced Security tab
+
+        ### Mark build status if policy violating issues are found
+        # mark_build_status: 'success'
+
+        ### Uncomment below configuration to add custom logic based on return status
+        # - name: cmdLine
+        #   id: cmdLine
+        #   run: |
+        #     EXIT_CODE=${{ steps.black-duck-security-scan.outputs.status }}
+        #     echo "Black Duck Security Scan exit status - $EXIT_CODE"
+        
+    - name: Save Logs
+      if: always()
+      uses: actions/upload-artifact@v4
+      with:
+        name: bridge-logs
+        path: ${{ github.workspace }}/.bridge
+        include-hidden-files: true
