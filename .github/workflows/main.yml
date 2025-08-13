@@ -24,9 +24,9 @@ jobs:
         uses: blackduck-inc/black-duck-security-scan@v2
         with:
           ### SCANNING: Required fields
-          #coverity_url: ${{ vars.COVERITY_URL }}
-          #coverity_user: ${{ secrets.COVERITY_USER }}
-          #coverity_passphrase: ${{ secrets.COVERITY_PASSPHRASE }}
+          coverity_url: ${{ vars.COVERITY_URL }}
+          coverity_user: ${{ secrets.COVERITY_USER }}
+          coverity_passphrase: ${{ secrets.COVERITY_PASSPHRASE }}
                             
           ### Coverity Connect users - Uncomment below
           coverity_local: true
