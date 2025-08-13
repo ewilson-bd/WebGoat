@@ -29,7 +29,7 @@ jobs:
           #coverity_passphrase: ${{ secrets.COVERITY_PASSPHRASE }}
                             
           ### Coverity Connect users - Uncomment below
-          # coverity_local: true
+          coverity_local: true
           
           ### POLICY ENFORCEMENT: Uncomment to break build on policy
           # coverity_policy_view: 'Outstanding Issues' 
