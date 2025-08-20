@@ -43,7 +43,7 @@ jobs:
           network_ssl_trustAll: true
 
           ### Perform local analysis with full toolkit
-          # coverity_local: true
+          coverity_local: true
           
           # include_diagnostics: true
 #    - name: Save Logs
