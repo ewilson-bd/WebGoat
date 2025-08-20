@@ -39,6 +39,9 @@ jobs:
           # Required when PR comments is enabled
           github_token: ${{ secrets.GITHUB_TOKEN }}
 
+          # Sets the SSL trust to true
+          git_ssl_no_verify: true
+
           ### Perform local analysis with full toolkit
           # coverity_local: true
           
