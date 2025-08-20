@@ -40,7 +40,7 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
 
           # Sets the SSL trust to true
-          git_ssl_no_verify: true
+          network_ssl_trustAll: true
 
           ### Perform local analysis with full toolkit
           # coverity_local: true
