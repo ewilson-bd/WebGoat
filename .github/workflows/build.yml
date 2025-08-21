@@ -38,7 +38,7 @@ jobs:
         github_token: ${{ secrets.GITHUB_TOKEN }} # Required when PR comments is enabled
         
         ### FIX PULL REQUEST CREATION: Uncomment below to enable, requires github_token
-        # blackducksca_fixpr_enabled: true
+        blackducksca_fixpr_enabled: true
 
         ### SARIF report generation
         blackducksca_reports_sarif_create: true
