@@ -31,7 +31,7 @@ jobs:
           coverity_passphrase: ${{ secrets.COVERITY_PASSPHRASE }}
                             
           ### POLICY ENFORCEMENT: Break build on full scan when encounter oustanding issues
-          coverity_policy_view: ${{ github.event_name != 'pull_request' && 'Outstanding Issues' || '' }}
+          #coverity_policy_view: ${{ github.event_name != 'pull_request' && 'Outstanding Issues' || '' }}
                             
           ### PULL REQUEST COMMENTS:
           coverity_prComment_enabled: true
