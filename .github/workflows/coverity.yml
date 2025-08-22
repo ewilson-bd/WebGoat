@@ -18,10 +18,8 @@ jobs:
             java-version: 23
             distribution: temurin
             cache: maven
-      - name: Check java version
-        run: java -version && javac -version
-      - name: Set environment variable to bypass TLS verification
-        run: echo "echo GIT_SSL_NO_VERIFY=true" >> $GITHUB_ENV && echo "BRIDGE_NETWORK_SSL_TRUST_ALL=true" >> $GITHUB_ENV
+      - name: Make sure mvnw is executable
+        run: mvn spotless:apply && mvn -N wrapper:wrapper && chmod +x ./mvnw
       - name: Checkout Source
         uses: actions/checkout@v4
       - name: Coverity Scan
