@@ -26,7 +26,6 @@ pipeline {
                     def version = getProjectVersion()
                     
                     security_scan product: 'blackducksca',
-                        blackducksca_scan_failure_severities: 'NONE',
                         blackducksca_prComment_enabled: true,
                         blackducksca_reports_sarif_create: true,
                         detect_args: "--detect.project.name='${env.DETECT_PROJECT_NAME}' --detect.project.version.name=${version}",
