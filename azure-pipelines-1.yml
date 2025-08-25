@@ -29,3 +29,4 @@ steps:
     scanType: 'blackducksca'
     blackduckScaUrl: '$(SCA_URL)'
     blackduckScaToken: '$(SCA_ACCESS_TOKEN)'
+    blackduckScaScanFull: true
