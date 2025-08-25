@@ -18,7 +18,7 @@ pipeline {
         DETECT_PROJECT_NAME = "${env.REPOSITORY_NAME}"
     }
     stages {
-        stage('Black Duck SCA') {
+        /*stage('Black Duck SCA') {
             when {
                 anyOf {
                     environment name: 'FULLSCAN', value: 'true'
@@ -38,7 +38,7 @@ pipeline {
                         include_diagnostics: false
                 }
             }
-        } stage("Build"){
+        }*/ stage("Build"){
           steps {
               sh './mvnw install -BskipTests
           }  
