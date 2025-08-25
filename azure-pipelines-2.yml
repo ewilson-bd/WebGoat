@@ -23,3 +23,13 @@ steps:
 - script: |
     java -version
   displayName: 'Print Java version'
+
+- task: BlackDuckSecurityScan@2
+  inputs:
+    networkSslTrustAll: true
+    scanType: 'coverity'
+    coverityUrl: '$(COVERITY_URL)'
+    coverityUser: '$(COVERITY_USERNAME)'
+    coverityUserPassword: '$(COVERITY_TOKEN)'
+    coverityBuildCommand: './mvnw install'
+    coverityCleanCommand: './mvnw clean'
