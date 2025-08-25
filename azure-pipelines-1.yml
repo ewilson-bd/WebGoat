@@ -1,0 +1,25 @@
+trigger:
+- none
+
+pool:
+  vmImage: ubuntu-latest
+
+variables:
+  - group: EvanW
+
+steps:
+- task: JavaToolInstaller@0
+  inputs:
+    versionSpec: '23'
+    jdkArchitectureOption: 'x64'
+    jdkSourceOption: 'PreInstalled'
+  displayName: 'Install Java'
+- bash: |
+    mvn spotless:apply
+    mvn -N wrapper:wrapper
+    chmod +x ./mvnw
+
+- script: |
+    java -version
+  displayName: 'Print Java version'
+
