@@ -28,10 +28,6 @@ steps:
     mvn spotless:apply
     mvn -N wrapper:wrapper
     chmod +x ./mvnw
-    apt install openjdk-23
-
-
-
 
 - task: BlackDuckSecurityScan@2
   inputs:
