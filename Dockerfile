@@ -1,13 +1,8 @@
-# We need JDK as some of the lessons needs to be able to compile Java code
-FROM docker.io/eclipse-temurin:23-jdk-noble
+FROM docker.io/eclipse-temurin:17-jre-focal
 
-LABEL name="WebGoat: A deliberately insecure Web Application"
-LABEL maintainer="WebGoat team"
-
-RUN \
-  useradd -ms /bin/bash webgoat && \
-  chgrp -R 0 /home/webgoat && \
-  chmod -R g=u /home/webgoat
+RUN useradd -ms /bin/bash webgoat
+RUN chgrp -R 0 /home/webgoat
+RUN chmod -R g=u /home/webgoat
 
 USER webgoat
 
@@ -15,8 +10,6 @@ COPY --chown=webgoat target/webgoat-*.jar /home/webgoat/webgoat.jar
 
 EXPOSE 8080
 EXPOSE 9090
-
-ENV TZ=Europe/Amsterdam
 
 WORKDIR /home/webgoat
 ENTRYPOINT [ "java", \
@@ -31,10 +24,9 @@ ENTRYPOINT [ "java", \
    "--add-opens", "java.base/sun.nio.ch=ALL-UNNAMED", \
    "--add-opens", "java.base/java.io=ALL-UNNAMED", \
    "--add-opens", "java.base/java.util=ALL-UNNAMED", \
-   "--add-opens", "java.base/sun.nio.ch=ALL-UNNAMED", \
-   "--add-opens", "java.base/java.io=ALL-UNNAMED", \
    "-Drunning.in.docker=true", \
-   "-jar", "webgoat.jar", "--server.address", "0.0.0.0" ]
-
-HEALTHCHECK --interval=5s --timeout=3s \
-  CMD curl --fail http://localhost:8080/WebGoat/actuator/health || exit 1
+   "-Dwebgoat.host=0.0.0.0", \
+   "-Dwebwolf.host=0.0.0.0", \
+   "-Dwebgoat.port=8080", \
+   "-Dwebwolf.port=9090", \
+   "-jar", "webgoat.jar" ]
