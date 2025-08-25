@@ -9,24 +9,13 @@ variables:
   - group: SCA
 
 steps:
-#- task: JavaToolInstaller@0
-#  inputs:
-#    versionSpec: '23'
-#    jdkArchitectureOption: 'x64'
-#    jdkSourceOption: 'PreInstalled'
-#  displayName: 'Install Java'
-    #curl -L -o jdk23.tar.gz https://download.oracle.com/java/23/latest/jdk-23_linux-x64_bin.tar.gz
-    #mkdir -p $HOME/jdk23
-    #tar -xzf jdk23.tar.gz -C $HOME/jdk23 --strip-components=1
-    #echo "##vso[task.setvariable variable=JAVA_HOME]$HOME/jdk23"
-    #echo "##vso[task.setvariable variable=PATH]$HOME/jdk23/bin:$PATH"
 - script: |
     ubuntu_release=`lsb_release -rs`
     wget https://packages.microsoft.com/config/ubuntu/${ubuntu_release}/packages-microsoft-prod.deb -O packages-microsoft-prod.deb
     sudo dpkg -i packages-microsoft-prod.deb
     sudo apt-get install apt-transport-https
     sudo apt-get update
-    sudo apt-get install msopenjdk-23
+    sudo apt-get install openjdk-23
   displayName: 'Install Java 23'
 
 - bash: |
