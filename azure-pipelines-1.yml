@@ -9,19 +9,20 @@ variables:
   - group: SCA
 
 steps:
-- script: |
-    ubuntu_release=`lsb_release -rs`
-    wget https://packages.microsoft.com/config/ubuntu/${ubuntu_release}/packages-microsoft-prod.deb -O packages-microsoft-prod.deb
-    sudo dpkg -i packages-microsoft-prod.deb
-    sudo apt-get install apt-transport-https
-    sudo apt-get update
-    sudo apt-get install openjdk-23
-  displayName: 'Install Java 23'
-
+- task: JavaToolInstaller@0
+  inputs:
+    versionSpec: '21'
+    jdkArchitectureOption: 'x64'
+    jdkSourceOption: 'PreInstalled'
+  displayName: 'Install Java'
 - bash: |
     mvn spotless:apply
     mvn -N wrapper:wrapper
     chmod +x ./mvnw
+
+- script: |
+    java -version
+  displayName: 'Print Java version'
 
 - task: BlackDuckSecurityScan@2
   inputs:
