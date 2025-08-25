@@ -1,11 +1,12 @@
 trigger:
+
 - none
 
 pool:
   vmImage: ubuntu-latest
 
 variables:
-  - group: EvanW
+  - group: SCA
 
 steps:
 - task: JavaToolInstaller@0
@@ -23,3 +24,8 @@ steps:
     java -version
   displayName: 'Print Java version'
 
+- task: BlackDuckSecurityScan@2
+  inputs:
+    scanType: 'blackducksca'
+    blackduckScaUrl: '$(SCA_URL)'
+    blackduckScaToken: '$(SCA_ACCESS_TOKEN)'
