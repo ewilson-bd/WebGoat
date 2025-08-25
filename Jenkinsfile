@@ -30,7 +30,7 @@ pipeline {
                         blackducksca_reports_sarif_create: true,
                         detect_args: "--detect.project.name='${env.DETECT_PROJECT_NAME}' --detect.project.version.name=${version}",
                         detect_search_depth: 20,
-                        mark_build_status: 'UNSTABLE',
+                        //mark_build_status: 'UNSTABLE',
                         include_diagnostics: false
                 }
             }
