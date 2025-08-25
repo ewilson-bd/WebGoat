@@ -31,5 +31,7 @@ steps:
     coverityUrl: '$(COVERITY_URL)'
     coverityUser: '$(COVERITY_USERNAME)'
     coverityUserPassword: '$(COVERITY_TOKEN)'
+    coverityProjectName: 'webgoat'
+    coverityStreamName: 'webgoat'
     coverityBuildCommand: './mvnw install'
     coverityCleanCommand: './mvnw clean'
