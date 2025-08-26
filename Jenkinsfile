@@ -7,7 +7,8 @@ pipeline {
     stages {
         stage('Build') {
             steps {
-                sh 'echo "Using JAVA_HOME: $JAVA_HOME"'
+                sh 'export PATH=$JAVA_HOME/bin:$PATH'
+                sh 'java -version'
                 sh 'mvn spotless:apply && mvn -N wrapper:wrapper && chmod +x ./mvnw'
                 sh './mvnw install -DskipTests'
             }
