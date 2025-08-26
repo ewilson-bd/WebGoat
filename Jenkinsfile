@@ -6,12 +6,7 @@ pipeline {
         jdk 'openjdk-23'
     }
     stages {
-        stage("TEST") {
-            steps{
-                echo 'Hello world'
-            }
-        }
-        /*stage('Build') {
+        stage('Build') {
             steps {
                 sh 'java -version'
                 sh './mvnw install -DskipTests'
@@ -37,13 +32,13 @@ pipeline {
                     network_ssl_trustAll: true
             }
         }  
-    } post {
-       always {
-           archiveArtifacts allowEmptyArchive: true, artifacts: '.bridge/bridge.log, .bridge/*///idir/build-log.txt'
+    } //post {
+       //always {
+           //archiveArtifacts allowEmptyArchive: true, artifacts: '.bridge/bridge.log, .bridge/*///idir/build-log.txt'
            // zip archive: true, dir: '.bridge', zipFile: 'bridge-logs.zip'
            //cleanWs()
        //}
-    } 
+    //}
 }
 
 // BLACK DUCK SCA:
