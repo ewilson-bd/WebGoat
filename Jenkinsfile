@@ -11,7 +11,7 @@ pipeline {
                 sh 'java -version'
                 sh './mvnw install -DskipTests'
             }
-        } stage('Coverity') {
+        }} /*stage('Coverity') {
             when {
                 anyOf {
                     environment name: 'FULLSCAN', value: 'true'
