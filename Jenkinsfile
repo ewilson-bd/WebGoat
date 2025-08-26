@@ -15,12 +15,12 @@ pipeline {
     }
     stages {
         stage('Black Duck SCA') {
-            when {
+            /*when {
                 anyOf {
                     environment name: 'FULLSCAN', value: 'true'
                     environment name: 'PRSCAN', value: 'true'
                 }
-            }
+            }*/
             steps {
                 script {
                     def version = getProjectVersion()
