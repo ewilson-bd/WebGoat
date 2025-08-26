@@ -1,7 +1,47 @@
-// example Jenkinsfile for Black Duck scans using the Black Duck Security Scan Plugin
-// https://plugins.jenkins.io/blackduck-security-scan
+// Coverity - SAST:
+pipeline {
+    agent any
+    tools {
+        maven 'maven-3.9'
+        jdk 'openjdk-23'
+    }
+    environment {
+        REPOSITORY_NAME = "${env.GIT_URL.tokenize('/.')[-2]}"
+        FULLSCAN = "${env.BRANCH_NAME ==~ /^(main|master|develop|stage|release)$/ ? 'true' : 'false'}"
+        PRSCAN = "${env.CHANGE_TARGET ==~ /^(main|master|develop|stage|release)$/ ? 'true' : 'false'}"
+    }
+    stages {
+        stage('Build') {
+            steps {
+                sh './mvnw install -DskipTests'
+            }
+        } stage('Coverity') {
+            /*when {
+                anyOf {
+                    environment name: 'FULLSCAN', value: 'true'
+                    environment name: 'PRSCAN', value: 'true'
+                }
+            } */
+            steps {
+                security_scan product: 'coverity',
+                    coverity_project_name: "$REPOSITORY_NAME",
+                    coverity_stream_name: "$REPOSITORY_NAME-$BRANCH_NAME",
+                    coverity_args: "-o commit.connect.description='$BUILD_TAG'",
+                    // Uncomment the coverity_local line below if using traditional Coverity deployments or 
+                    // Cloud Native Coverity (CNC) with scan services disabled
+                    // coverity_local: true,
+                    coverity_policy_view: 'Outstanding Issues',
+                    coverity_prComment_enabled: true,
+                    //mark_build_status: 'UNSTABLE',
+                    include_diagnostics: false,
+                    network_ssl_trustAll: true
+            }
+        }  
+    }
+}
 
-def getProjectVersion() {
+// BLACK DUCK SCA:
+/* def getProjectVersion() {
     return env.PRSCAN == 'true' ? env.CHANGE_TARGET : env.BRANCH_NAME
 }
 
@@ -21,7 +61,7 @@ pipeline {
                     environment name: 'FULLSCAN', value: 'true'
                     environment name: 'PRSCAN', value: 'true'
                 }
-            }*/
+            }
             steps {
                 script {
                     def version = getProjectVersion()
@@ -45,3 +85,4 @@ pipeline {
         }
     }
 }
+*/
