@@ -19,6 +19,7 @@ steps:
     mvn spotless:apply
     mvn -N wrapper:wrapper
     chmod +x ./mvnw
+    mvn --version
 
 - script: |
     java -version
