@@ -9,8 +9,10 @@ pipeline {
             steps {
                 withEnv(["PATH+JAVA=$JAVA_HOME/bin", "JAVA_HOME=$JAVA_HOME"]) {
                     sh '''
-                        export PATH=$JAVA_HOME/bin:$PATH
+                        echo "JAVA_HOME is: $JAVA_HOME"
+                        which java
                         java -version
+                        
                         mvn spotless:apply && mvn -N wrapper:wrapper && chmod +x ./mvnw
                         ./mvnw install -DskipTests
                     '''
