@@ -4,6 +4,9 @@ pipeline {
         maven 'maven-3.9'
         jdk 'openjdk-17'
     }
+    environment{
+        network_ssl_trustAll = 'true'
+    }
     stages {
         stage('Build and set up Java') {
             steps {
@@ -33,7 +36,7 @@ pipeline {
                     coverity_prComment_enabled: true,
                     //mark_build_status: 'UNSTABLE',
                     include_diagnostics: false,
-                    network_ssl_trustAll: true
+                    //network_ssl_trustAll: true
             }
         }
     }
