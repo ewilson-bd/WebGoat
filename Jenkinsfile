@@ -23,12 +23,12 @@ pipeline {
             }
         }
         stage('Polaris') {
-            when {
+            /*when {
                 anyOf {
                     environment name: 'FULLSCAN', value: 'true'
                     environment name: 'PRSCAN', value: 'true'
                 }
-            }
+            }*/
             steps {
                 security_scan product: 'polaris',
                     polaris_application_name: "Evan Onboarding",
