@@ -33,7 +33,7 @@ pipeline {
                     coverity_prComment_enabled: true,
                     //mark_build_status: 'UNSTABLE',
                     include_diagnostics: false,
-                    network_ssl_trustall: true
+                    NETWORK_SSL_TRUSTALL: true
             }
         }
     }
