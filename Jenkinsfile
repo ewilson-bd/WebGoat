@@ -27,7 +27,7 @@ pipeline {
                 security_scan product: 'coverity',
                     coverity_project_name: "$REPOSITORY_NAME",
                     coverity_stream_name: "$REPOSITORY_NAME",
-                    coverity_args: "-o commit.connect.description='$BUILD_TAG'",
+                    coverity_args: "-o commit.connect.description='test commit'",
                     // Uncomment the coverity_local line below if using traditional Coverity deployments or 
                     // Cloud Native Coverity (CNC) with scan services disabled
                     coverity_local: true,
