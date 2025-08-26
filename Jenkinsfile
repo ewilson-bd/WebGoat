@@ -7,17 +7,18 @@ pipeline {
     stages {
         stage('Build') {
             steps {
-                withEnv(["PATH+JAVA=$JAVA_HOME/bin", "JAVA_HOME=$JAVA_HOME"]) {
-                    sh '''
-                        echo "JAVA_HOME is: $JAVA_HOME"
-                        which java
-                        java -version
-                        
-                        mvn spotless:apply && mvn -N wrapper:wrapper && chmod +x ./mvnw
-                        ./mvnw install -DskipTests
-                    '''
-                }
-                
+                sh '''
+                    export JAVA_HOME=/var/lib/jenkins/tools/hudson.model.JDK/openjdk-17
+                    export PATH=$JAVA_HOME/bin:$PATH
+            
+                    echo "JAVA_HOME: $JAVA_HOME"
+                    echo "PATH: $PATH"
+                    which java
+                    java -version
+                    
+                    mvn spotless:apply && mvn -N wrapper:wrapper && chmod +x ./mvnw
+                    ./mvnw install -DskipTests
+                '''                
                 /*sh 'export PATH=$JAVA_HOME/bin:$PATH'
                 sh 'java -version'
                 sh 'mvn spotless:apply && mvn -N wrapper:wrapper && chmod +x ./mvnw'
