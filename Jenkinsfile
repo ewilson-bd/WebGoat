@@ -1,12 +1,17 @@
 // Coverity - SAST:
 pipeline {
-    agent { label 'linux64' }
+    agent any
     tools {
         maven 'maven-3.9'
         jdk 'openjdk-23'
     }
     stages {
-        stage('Build') {
+        stage("TEST") {
+            steps{
+                echo 'Hello world'
+            }
+        }
+        /*stage('Build') {
             steps {
                 sh 'java -version'
                 sh './mvnw install -DskipTests'
@@ -31,7 +36,7 @@ pipeline {
                     include_diagnostics: false,
                     network_ssl_trustAll: true
             }
-        }  
+        }*/  
     } post {
        always {
            archiveArtifacts allowEmptyArchive: true, artifacts: '.bridge/bridge.log, .bridge/*/idir/build-log.txt'
