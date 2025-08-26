@@ -7,10 +7,16 @@ pipeline {
     stages {
         stage('Build') {
             steps {
-                sh 'export PATH=$JAVA_HOME/bin:$PATH'
+                sh '''
+                export PATH=$JAVA_HOME/bin:$PATH
+                java -version
+                mvn spotless:apply && mvn -N wrapper:wrapper && chmod +x ./mvnw
+                ./mvnw install -DskipTests
+                '''
+                /*sh 'export PATH=$JAVA_HOME/bin:$PATH'
                 sh 'java -version'
                 sh 'mvn spotless:apply && mvn -N wrapper:wrapper && chmod +x ./mvnw'
-                sh './mvnw install -DskipTests'
+                sh './mvnw install -DskipTests' */
             }
         }
         stage('Coverity') {
