@@ -4,15 +4,13 @@ pipeline {
         maven 'maven-3.9'
         jdk 'openjdk-17'
     }
-    environment{
-        network_ssl_trustAll = 'true'
-    }
     stages {
         stage('Build and set up Java') {
             steps {
                 sh '''
                     export JAVA_HOME=/var/lib/jenkins/tools/hudson.model.JDK/openjdk-17/jdk-17
                     export PATH=$JAVA_HOME/bin:$PATH
+                    export BRIDGE_NETWORK_SSL_TRUSTALL=TRUE
 
                     mvn spotless:apply && mvn -N wrapper:wrapper && chmod +x ./mvnw
                 '''                
