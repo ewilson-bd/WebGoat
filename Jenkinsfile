@@ -8,19 +8,14 @@ pipeline {
         stage('Build') {
             steps {
                 sh '''
-                    export JAVA_HOME=/var/lib/jenkins/tools/hudson.model.JDK/openjdk-17
+                    
+                    export JAVA_HOME=/var/lib/jenkins/tools/hudson.model.JDK/openjdk-17/jdk-17
                     export PATH=$JAVA_HOME/bin:$PATH
-            
+                
                     echo "JAVA_HOME: $JAVA_HOME"
                     echo "PATH: $PATH"
                     which java
                     java -version
-
-                    
-                    echo "Listing contents of JAVA_HOME:"
-                    ls -l $JAVA_HOME
-                    echo "Listing contents of JAVA_HOME/bin:"
-                    ls -l $JAVA_HOME/bin
 
                     
                     mvn spotless:apply && mvn -N wrapper:wrapper && chmod +x ./mvnw
