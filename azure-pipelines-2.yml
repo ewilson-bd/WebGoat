@@ -29,5 +29,5 @@ steps:
     coverityLocal: true
     coverityProjectName: 'webgoat'
     coverityStreamName: 'webgoat'
-    coverityBuildCommand: './mvnw install -DskipTests'
+    coverityBuildCommand: './mvnw clean install -DskipTests'
     coverityCleanCommand: './mvnw clean'
