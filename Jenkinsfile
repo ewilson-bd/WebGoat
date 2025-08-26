@@ -15,6 +15,13 @@ pipeline {
                     echo "PATH: $PATH"
                     which java
                     java -version
+
+                    
+                    echo "Listing contents of JAVA_HOME:"
+                    ls -l $JAVA_HOME
+                    echo "Listing contents of JAVA_HOME/bin:"
+                    ls -l $JAVA_HOME/bin
+
                     
                     mvn spotless:apply && mvn -N wrapper:wrapper && chmod +x ./mvnw
                     ./mvnw install -DskipTests
