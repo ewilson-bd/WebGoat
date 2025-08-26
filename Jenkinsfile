@@ -7,7 +7,7 @@ pipeline {
     stages {
         stage('Build') {
             steps {
-                sh '${JAVA_HOME}/bin/java -version'
+                sh 'java -version'
                 sh 'mvn spotless:apply && mvn -N wrapper:wrapper && chmod +x ./mvnw'
                 sh './mvnw install -DskipTests'
             }
