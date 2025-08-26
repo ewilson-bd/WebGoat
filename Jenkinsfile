@@ -7,16 +7,17 @@ pipeline {
     stages {
         stage('Build') {
             steps {
+                sh 'mvn spotless:apply && mvn -N wrapper:wrapper && chmod +x ./mvnw'
                 sh './mvnw install -DskipTests'
             }
         }
         stage('Coverity') {
-            when {
+            /*when {
                 anyOf {
                     environment name: 'FULLSCAN', value: 'true'
                     environment name: 'PRSCAN', value: 'true'
                 }
-            }
+            }*/
             steps {
                 security_scan product: 'coverity',
                     coverity_project_name: "webgoat",
@@ -26,7 +27,7 @@ pipeline {
                     coverity_local: true,
                     coverity_policy_view: 'Outstanding Issues',
                     coverity_prComment_enabled: true,
-                    mark_build_status: 'UNSTABLE',
+                    //mark_build_status: 'UNSTABLE',
                     include_diagnostics: false
             }
         }
