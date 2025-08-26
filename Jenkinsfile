@@ -12,7 +12,6 @@ pipeline {
                     export PATH=$JAVA_HOME/bin:$PATH
 
                     mvn spotless:apply && mvn -N wrapper:wrapper && chmod +x ./mvnw
-                    ./mvnw clean install -DskipTests
                 '''                
             }
         }
