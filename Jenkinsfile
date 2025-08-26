@@ -12,6 +12,7 @@ pipeline {
         FULLSCAN = "${env.BRANCH_NAME ==~ /^(main|master|develop|stage|release)$/ ? 'true' : 'false'}"
         PRSCAN = "${env.CHANGE_TARGET ==~ /^(main|master|develop|stage|release)$/ ? 'true' : 'false'}"
         DETECT_PROJECT_NAME = "${env.REPOSITORY_NAME}"
+        DETECT_EXCLUDED_DETECTOR_TYPES="GIT"
     }
     stages {
         stage('Black Duck SCA') {
