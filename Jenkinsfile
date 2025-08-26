@@ -1,14 +1,13 @@
 // Coverity - SAST:
 pipeline {
-    agent any
-    tools {
-        maven 'maven-3.9'
-        jdk 'openjdk-23'
-    }
+    agent { label 'linux64' }
     environment {
         REPOSITORY_NAME = "webgoat"
         FULLSCAN = "${env.BRANCH_NAME ==~ /^(main|master|develop|stage|release)$/ ? 'true' : 'false'}"
         PRSCAN = "${env.CHANGE_TARGET ==~ /^(main|master|develop|stage|release)$/ ? 'true' : 'false'}"
+    } tools {
+        maven 'maven-3.9'
+        jdk 'openjdk-23'
     }
     stages {
         stage('Build') {
