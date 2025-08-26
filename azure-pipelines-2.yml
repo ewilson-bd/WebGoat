@@ -19,10 +19,6 @@ steps:
     mvn -N wrapper:wrapper
     chmod +x ./mvnw
 
-- script: |
-    java -version
-  displayName: 'Print Java version'
-
 - task: BlackDuckSecurityScan@2
   inputs:
     networkSslTrustAll: true
