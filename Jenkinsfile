@@ -8,7 +8,7 @@ pipeline {
     stages {
         stage('Build') {
             steps {
-                sh 'java -version',
+                sh 'java -version'
                 sh './mvnw install -DskipTests'
             }
         } stage('Coverity') {
