@@ -32,7 +32,8 @@ pipeline {
                     coverity_policy_view: 'Outstanding Issues',
                     coverity_prComment_enabled: true,
                     //mark_build_status: 'UNSTABLE',
-                    include_diagnostics: false
+                    include_diagnostics: false,
+                    network_ssl_trustAll: true
             }
         }
     }
