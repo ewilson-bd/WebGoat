@@ -1,11 +1,6 @@
 // Coverity - SAST:
 pipeline {
     agent { label 'linux64' }
-    environment {
-        REPOSITORY_NAME = "webgoat"
-        //FULLSCAN = "${env.BRANCH_NAME ==~ /^(main|master|develop|stage|release)$/ ? 'true' : 'false'}"
-        //PRSCAN = "${env.CHANGE_TARGET ==~ /^(main|master|develop|stage|release)$/ ? 'true' : 'false'}"
-    } 
     tools {
         maven 'maven-3.9'
         jdk 'openjdk-23'
@@ -25,9 +20,8 @@ pipeline {
             }*/
             steps {
                 security_scan product: 'coverity',
-                    coverity_project_name: "$REPOSITORY_NAME",
-                    coverity_stream_name: "$REPOSITORY_NAME",
-                    coverity_args: "-o commit.connect.description='test commit'",
+                    coverity_project_name: "webgoat",
+                    coverity_stream_name: "webgoat",
                     // Uncomment the coverity_local line below if using traditional Coverity deployments or 
                     // Cloud Native Coverity (CNC) with scan services disabled
                     coverity_local: true,
