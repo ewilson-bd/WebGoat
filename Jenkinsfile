@@ -13,15 +13,16 @@ pipeline {
     stages {
         stage('Build') {
             steps {
+                sh java -version
                 sh './mvnw install -DskipTests'
             }
         } stage('Coverity') {
-            /*when {
+            when {
                 anyOf {
                     environment name: 'FULLSCAN', value: 'true'
                     environment name: 'PRSCAN', value: 'true'
                 }
-            } */
+            }
             steps {
                 security_scan product: 'coverity',
                     coverity_project_name: "$REPOSITORY_NAME",
