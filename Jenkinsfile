@@ -13,6 +13,9 @@ pipeline {
         stage('Build') {
             steps {
                 sh '''
+                    export JAVA_HOME=/var/lib/jenkins/tools/hudson.model.JDK/openjdk-17/jdk-17
+                    export PATH=$JAVA_HOME/bin:$PATH
+                    
                     mvn spotless:apply
                     mvn -N wrapper:wrapper
                     chmod +x ./mvnw
