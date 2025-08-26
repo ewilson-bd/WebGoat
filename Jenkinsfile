@@ -5,14 +5,15 @@ pipeline {
         REPOSITORY_NAME = "webgoat"
         //FULLSCAN = "${env.BRANCH_NAME ==~ /^(main|master|develop|stage|release)$/ ? 'true' : 'false'}"
         //PRSCAN = "${env.CHANGE_TARGET ==~ /^(main|master|develop|stage|release)$/ ? 'true' : 'false'}"
-    } tools {
+    } 
+    tools {
         maven 'maven-3.9'
         jdk 'openjdk-23'
     }
     stages {
         stage('Build') {
             steps {
-                sh java -version
+                sh 'java -version'
                 sh './mvnw install -DskipTests'
             }
         } stage('Coverity') {
