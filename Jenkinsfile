@@ -36,14 +36,14 @@ pipeline {
                     include_diagnostics: false,
                     network_ssl_trustAll: true
             }
-        }*/  
+        }  
     } post {
        always {
-           archiveArtifacts allowEmptyArchive: true, artifacts: '.bridge/bridge.log, .bridge/*/idir/build-log.txt'
+           archiveArtifacts allowEmptyArchive: true, artifacts: '.bridge/bridge.log, .bridge/*///idir/build-log.txt'
            // zip archive: true, dir: '.bridge', zipFile: 'bridge-logs.zip'
-           cleanWs()
-       }
-    }
+           //cleanWs()
+       //}
+    } 
 }
 
 // BLACK DUCK SCA:
