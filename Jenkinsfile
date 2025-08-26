@@ -6,7 +6,7 @@ pipeline {
         jdk 'openjdk-23'
     }
     environment {
-        REPOSITORY_NAME = "${env.GIT_URL.tokenize('/.')[-2]}"
+        REPOSITORY_NAME = "webgoat"
         FULLSCAN = "${env.BRANCH_NAME ==~ /^(main|master|develop|stage|release)$/ ? 'true' : 'false'}"
         PRSCAN = "${env.CHANGE_TARGET ==~ /^(main|master|develop|stage|release)$/ ? 'true' : 'false'}"
     }
@@ -25,7 +25,7 @@ pipeline {
             steps {
                 security_scan product: 'coverity',
                     coverity_project_name: "$REPOSITORY_NAME",
-                    coverity_stream_name: "$REPOSITORY_NAME-$BRANCH_NAME",
+                    coverity_stream_name: "$REPOSITORY_NAME",
                     coverity_args: "-o commit.connect.description='$BUILD_TAG'",
                     // Uncomment the coverity_local line below if using traditional Coverity deployments or 
                     // Cloud Native Coverity (CNC) with scan services disabled
