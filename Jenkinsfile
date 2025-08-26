@@ -3,8 +3,8 @@ pipeline {
     agent { label 'linux64' }
     environment {
         REPOSITORY_NAME = "webgoat"
-        FULLSCAN = "${env.BRANCH_NAME ==~ /^(main|master|develop|stage|release)$/ ? 'true' : 'false'}"
-        PRSCAN = "${env.CHANGE_TARGET ==~ /^(main|master|develop|stage|release)$/ ? 'true' : 'false'}"
+        //FULLSCAN = "${env.BRANCH_NAME ==~ /^(main|master|develop|stage|release)$/ ? 'true' : 'false'}"
+        //PRSCAN = "${env.CHANGE_TARGET ==~ /^(main|master|develop|stage|release)$/ ? 'true' : 'false'}"
     } tools {
         maven 'maven-3.9'
         jdk 'openjdk-23'
@@ -16,12 +16,12 @@ pipeline {
                 sh './mvnw install -DskipTests'
             }
         } stage('Coverity') {
-            when {
+            /*when {
                 anyOf {
                     environment name: 'FULLSCAN', value: 'true'
                     environment name: 'PRSCAN', value: 'true'
                 }
-            }
+            }*/
             steps {
                 security_scan product: 'coverity',
                     coverity_project_name: "$REPOSITORY_NAME",
