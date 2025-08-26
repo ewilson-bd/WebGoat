@@ -5,26 +5,15 @@ pipeline {
         jdk 'openjdk-17'
     }
     stages {
-        stage('Build') {
+        stage('Build and set up Java') {
             steps {
                 sh '''
-                    
                     export JAVA_HOME=/var/lib/jenkins/tools/hudson.model.JDK/openjdk-17/jdk-17
                     export PATH=$JAVA_HOME/bin:$PATH
-                
-                    echo "JAVA_HOME: $JAVA_HOME"
-                    echo "PATH: $PATH"
-                    which java
-                    java -version
 
-                    
                     mvn spotless:apply && mvn -N wrapper:wrapper && chmod +x ./mvnw
-                    ./mvnw install -DskipTests
+                    ./mvnw clean install -DskipTests
                 '''                
-                /*sh 'export PATH=$JAVA_HOME/bin:$PATH'
-                sh 'java -version'
-                sh 'mvn spotless:apply && mvn -N wrapper:wrapper && chmod +x ./mvnw'
-                sh './mvnw install -DskipTests' */
             }
         }
         stage('Coverity') {
