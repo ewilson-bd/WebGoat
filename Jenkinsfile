@@ -13,16 +13,9 @@ pipeline {
                 sh '''
                     export JAVA_HOME=/var/lib/jenkins/tools/hudson.model.JDK/openjdk-17/jdk-17
                     export PATH=$JAVA_HOME/bin:$PATH
-                    
+                    echo "secret is ${COVERITY_TOKEN}"
                     mvn spotless:apply && mvn -N wrapper:wrapper && chmod +x ./mvnw
                 '''                
-            }
-        }stage('Debug secret'){
-            steps{
-                script{
-                    def secret = credentials('EVAN_COVERITY_TOKEN')
-                    echo "DEBUG: Secret is ${secret}"
-                }
             }
         }
         stage('Coverity') {
