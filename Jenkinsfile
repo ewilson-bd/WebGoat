@@ -17,7 +17,7 @@ pipeline {
                     mvn spotless:apply && mvn -N wrapper:wrapper && chmod +x ./mvnw
                 '''                
             }
-        }stage("Debug secret"){
+        }stage('Debug secret'){
             steps{
                 script{
                     def secret = credentials('EVAN_COVERITY_TOKEN')
