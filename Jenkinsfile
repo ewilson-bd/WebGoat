@@ -8,13 +8,14 @@ pipeline {
         REPOSITORY_NAME = "${env.GIT_URL.tokenize('/.')[-2]}"
         FULLSCAN = "${env.BRANCH_NAME ==~ /^(main|master|develop|stage|release)$/ ? 'true' : 'false'}"
         PRSCAN = "${env.CHANGE_TARGET ==~ /^(main|master|develop|stage|release)$/ ? 'true' : 'false'}"
+        JAVA_HOME = '/var/lib/jenkins/tools/hudson.model.JDK/openjdk-17/jdk-17'
+        PATH = "${JAVA_HOME}/bin:${env.PATH}"
     }
     stages {
         stage('Build') {
             steps {
                 sh '''
-                    export JAVA_HOME=/var/lib/jenkins/tools/hudson.model.JDK/openjdk-17/jdk-17
-                    export PATH=$JAVA_HOME/bin:$PATH
+                    echo 'JAVA_HOME is $JAVA_HOME'
                     
                     mvn spotless:apply
                     mvn -N wrapper:wrapper
@@ -29,12 +30,7 @@ pipeline {
                     environment name: 'PRSCAN', value: 'true'
                 }
             }*/
-            steps {
-                sh '''
-                    export JAVA_HOME=/var/lib/jenkins/tools/hudson.model.JDK/openjdk-17/jdk-17
-                    export PATH=$JAVA_HOME/bin:$PATH
-                '''
-                
+            steps {      
                 sh 'echo "We\'re now in the build phase, java home is " $JAVA_HOME'
                 sh 'echo heres what resides in the folder! '
                 sh 'ls /var/lib/jenkins/tools/hudson.model.JDK/openjdk-17/'
