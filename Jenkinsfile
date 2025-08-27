@@ -36,7 +36,7 @@ pipeline {
                     coverity_policy_view: 'Outstanding Issues',
                     coverity_prComment_enabled: true,
                     //mark_build_status: 'UNSTABLE',
-                    coverity_args: "-o commit.connect.description=$BUILD_TAG",
+                    //coverity_args: "-o commit.connect.description=$BUILD_TAG",
                     network_ssl_trustAll: true,
                     include_diagnostics: false
             }
