@@ -18,13 +18,6 @@ pipeline {
                 '''                
             }
         }
-        stage('Debug'){
-            steps{
-                script{
-                    echo "DEBUG: token is: ${env.COVERITY_TOKEN}"
-                }
-            }
-        }
         stage('Coverity') {
             /*when {
                 anyOf {
