@@ -15,7 +15,7 @@ pipeline {
         stage('Build') {
             steps {
                 sh '''
-                    echo 'JAVA_HOME is $JAVA_HOME'
+                    echo JAVA_HOME is $JAVA_HOME\nPATH is $PATH
                     
                     mvn spotless:apply
                     mvn -N wrapper:wrapper
