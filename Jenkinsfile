@@ -30,6 +30,11 @@ pipeline {
                 }
             }*/
             steps {
+                sh '''
+                    export JAVA_HOME=/var/lib/jenkins/tools/hudson.model.JDK/openjdk-17/jdk-17
+                    export PATH=$JAVA_HOME/bin:$PATH
+                '''
+                
                 sh 'echo "We\'re now in the build phase, java home is " $JAVA_HOME'
                 sh 'echo heres what resides in the folder! '
                 sh 'ls /var/lib/jenkins/tools/hudson.model.JDK/openjdk-17/'
