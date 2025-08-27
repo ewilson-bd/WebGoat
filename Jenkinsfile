@@ -15,7 +15,7 @@ pipeline {
                 ]) {
                     sh '''
                         ls /var/lib/jenkins/tools/hudson.tasks.Maven_MavenInstallation
-                        ls /var/lib/jenkins/tools/hudson.tasks.Maven_MavenInstallation/maven
+                        ls /var/lib/jenkins/tools/hudson.tasks.Maven_MavenInstallation/maven-4.0
                         mvn spotless:apply
                         mvn -N wrapper:wrapper
                         chmod +x ./mvnw
