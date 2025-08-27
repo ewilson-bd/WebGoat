@@ -14,6 +14,8 @@ pipeline {
                     'PATH=/var/lib/jenkins/tools/hudson.model.JDK/openjdk-17/jdk-17/bin:' + env.PATH
                 ]) {
                     sh '''
+                        ls /var/lib/jenkins/tools/hudson.tasks.Maven_MavenInstallation
+                        ls /var/lib/jenkins/tools/hudson.tasks.Maven_MavenInstallation/maven
                         mvn spotless:apply
                         mvn -N wrapper:wrapper
                         chmod +x ./mvnw
