@@ -1,0 +1,40 @@
+trigger:
+- none
+
+pool:
+  vmImage: ubuntu-latest
+variables:
+  - group: KyleH
+  - name: SAST_Test_Type
+    ${{ if eq(variables['FULL_SCAN'],TRUE) }}:
+      value: 'SAST-FULL'
+    ${{ else }}:
+      value: 'SAST-RAPID'
+
+
+steps:
+- task: JavaToolInstaller@0
+  inputs:
+    versionSpec: '15'
+    jdkArchitectureOption: 'x64'
+    jdkSourceOption: 'PreInstalled'
+  displayName: 'Install Java'
+- bash: |
+    mvn spotless:apply
+    mvn -N wrapper:wrapper
+- task: BlackDuckSecurityScan@2
+  inputs:
+    scanType: 'polaris'
+    polarisServerUrl: '$(POLARIS_URL)'
+    polarisAccessToken: '$(POLARIS_ACCESSTOKEN)'
+    polarisAssessmentTypes: 'SAST,SCA'
+    polarisTestScaType: 'SCA-PACKAGE,SCA-SIGNATURE'
+    polarisTestSastType: '$(SAST_Test_Type)'
+    polarisAzureToken: '$(ADO_TOKEN)'
+    polarisApplicationName: 'KyleH'
+    polarisProjectName: 'ADO WebGoat'
+    polarisBranchName: 'SecurityScan'
+    polarisAssessmentMode: 'CI'
+    polarisPrCommentEnabled: true
+    coverityBuildCommandForPolaris: './mvnw install -DskipTests'
+    coverityCleanCommandForPolaris: './mvnw clean'

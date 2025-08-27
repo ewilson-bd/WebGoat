@@ -1,0 +1,49 @@
+# Downloading and executing Bridge directly
+
+trigger:
+- none
+
+pool:
+  vmImage: ubuntu-latest
+variables:
+  - group: Polaris POC
+steps:
+- task: JavaToolInstaller@0
+  inputs:
+    versionSpec: '17'
+    jdkArchitectureOption: 'x64'
+    jdkSourceOption: 'PreInstalled'
+  displayName: 'Install Java'
+- bash: |
+    mvn spotless:apply
+    mvn -N wrapper:wrapper
+    ./mvnw spotless:apply
+    ./mvnw clean install
+    curl -fLsS -o bridge.zip $(BRIDGECLI_LINUX64) && unzip -qo -d $(Agent.TempDirectory) bridge.zip && rm -f bridge.zip
+    $(Agent.TempDirectory)/bridge-cli-bundle-linux64/bridge-cli --stage polaris
+  env:
+    BRIDGE_POLARIS_SERVERURL: $(POLARIS_SERVERURL)
+    BRIDGE_POLARIS_ACCESSTOKEN: $(POLARIS_ACCESSTOKEN)
+    BRIDGE_POLARIS_ASSESSMENT_TYPES: 'SAST,SCA'
+    BRIDGE_POLARIS_TEST_SCA_TYPE: 'SCA-PACKAGE,SCA-SIGNATURE'
+    BRIDGE_POLARIS_APPLICATION_NAME: 'KyleH With DAST'
+    BRIDGE_POLARIS_PROJECT_NAME: 'Web Goat Bridge'
+    BRIDGE_POLARIS_BRANCH_NAME: 'Main'
+    # INCLUDE_DIAGNOSTICS: 'true'
+    BRIDGE_COVERITY_BUILD_COMMAND: './mvnw install -DskipTests'
+    BRIDGE_COVERITY_CLEAN_COMMAND: './mvnw clean'
+  displayName: 'Polaris Full Scan'
+  condition: eq(variables['FULL_SCAN'], TRUE)
+- bash: |
+    curl -fLsS -o bridge.zip $(BRIDGECLI_LINUX64) && unzip -qo -d $(Agent.TempDirectory) bridge.zip && rm -f bridge.zip
+    $(Agent.TempDirectory)/bridge-cli-bundle-linux64/bridge-cli --stage polaris
+  env:
+    BRIDGE_POLARIS_SERVERURL: $(POLARIS_SERVERURL)
+    BRIDGE_POLARIS_ACCESSTOKEN: $(POLARIS_ACCESSTOKEN)
+    BRIDGE_POLARIS_ASSESSMENT_TYPES: 'SAST'
+    BRIDGE_POLARIS_APPLICATION_NAME: 'KyleH With DAST'
+    BRIDGE_POLARIS_PROJECT_NAME: 'Web Goat Bridge'
+    BRIDGE_POLARIS_BRANCH_NAME: 'Main'
+    BRIDGE_POLARIS_TEST_SAST_TYPE: "SAST-RAPID"
+  displayName: "rapid scan"
+  condition: eq(variables['FULL_SCAN'],FALSE)
