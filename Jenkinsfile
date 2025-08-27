@@ -14,9 +14,6 @@ pipeline {
                     'PATH=/var/lib/jenkins/tools/hudson.model.JDK/openjdk-17/jdk-17/bin:' + env.PATH
                 ]) {
                     sh '''
-                        echo "JAVA_HOME is $JAVA_HOME"
-                        echo "PATH is $PATH"
-
                         mvn spotless:apply
                         mvn -N wrapper:wrapper
                         chmod +x ./mvnw
@@ -31,8 +28,6 @@ pipeline {
                     'JAVA_HOME=/var/lib/jenkins/tools/hudson.model.JDK/openjdk-17/jdk-17',
                     'PATH=/var/lib/jenkins/tools/hudson.model.JDK/openjdk-17/jdk-17/bin:' + env.PATH
                 ]) {
-                    sh 'echo "We\'re now in the build phase, JAVA_HOME is $JAVA_HOME"'
-                    sh 'ls $JAVA_HOME'
                     security_scan product: 'polaris',
                         polaris_application_name: "Evan Onboarding",
                         polaris_project_name: "Jenkins scan",
