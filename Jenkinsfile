@@ -31,6 +31,9 @@ pipeline {
             }*/
             steps {
                 sh 'echo "We\'re now in the build phase, java home is " $JAVA_HOME'
+                sh 'echo heres what resides in the folder! '
+                sh 'ls /var/lib/jenkins/tools/hudson.model.JDK/openjdk-17/'
+                sh 'ls /var/lib/jenkins/tools/hudson.model.JDK/openjdk-17/bin'
                 security_scan product: 'polaris',
                     polaris_application_name: "Evan Onboarding",
                     polaris_project_name: "Jenkins scan",
