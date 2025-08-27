@@ -25,6 +25,7 @@ pipeline {
             }*/
             steps {
                 security_scan product: 'coverity',
+                    coverity_url: 'https://ec2-13-57-6-68.us-west-1.compute.amazonaws.com:8443',
                     coverity_project_name: "webgoat",
                     coverity_stream_name: "webgoat",
                     coverity_local: true,
