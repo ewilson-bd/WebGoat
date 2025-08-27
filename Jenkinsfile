@@ -36,16 +36,15 @@ pipeline {
                 security_scan product: 'coverity',
                     coverity_project_name: "webgoat",
                     coverity_stream_name: "webgoat",
-                    //coverity_passphrase: '$COVERITY_TOKEN',
+                    coverity_passphrase: 'E642F2EB4B0BF5F2234D477D701DD128',
                     coverity_url: 'https://ec2-13-57-6-68.us-west-1.compute.amazonaws.com:8443',
-                    //coverity_user: 'admin',
+                    coverity_user: 'admin',
                     coverity_local: true,
                     coverity_policy_view: 'Outstanding Issues',
                     coverity_prComment_enabled: true,
                     //mark_build_status: 'UNSTABLE',
                     coverity_args: "-o commit.connect.description=$BUILD_TAG",
                     network_ssl_trustAll: true,
-                    //cert_file: 'server.cert',
                     include_diagnostics: false
             }
         }
