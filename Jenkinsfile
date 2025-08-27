@@ -27,8 +27,6 @@ pipeline {
                 security_scan product: 'coverity',
                     coverity_project_name: "webgoat",
                     coverity_stream_name: "webgoat",
-                    // Uncomment the coverity_local line below if using traditional Coverity deployments or 
-                    // Cloud Native Coverity (CNC) with scan services disabled
                     coverity_local: true,
                     coverity_policy_view: 'Outstanding Issues',
                     coverity_prComment_enabled: true,
@@ -44,7 +42,5 @@ pipeline {
            // zip archive: true, dir: '.bridge', zipFile: 'bridge-logs.zip'
            cleanWs()
        }
-    }
-        // Include Coverity stage detailed in scripted language instructions
-        // in addition to environment and post sections   
+    } 
 }
