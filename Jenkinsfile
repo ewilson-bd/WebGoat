@@ -34,6 +34,7 @@ pipeline {
                     //mark_build_status: 'UNSTABLE',
                     coverity_args: "-o commit.connect.description=$BUILD_TAG",
                     //network_ssl_trustAll: true,
+                    network_ssl_cert_file: 'server.cert',
                     include_diagnostics: false
             }
         }
