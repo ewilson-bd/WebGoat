@@ -30,6 +30,7 @@ pipeline {
                 }
             }*/
             steps {
+                sh 'echo "We\'re now in the build phase, java home is " $JAVA_HOME'
                 security_scan product: 'polaris',
                     polaris_application_name: "Evan Onboarding",
                     polaris_project_name: "Jenkins scan",
